@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Santiago | Elixerium Odor Strategy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@300&display=swap" rel="stylesheet">
+    <style>
+        /* =========================================================================
+           1. CORE ENGINE & DESIGN SYSTEM (ELIXERIUM NEON NOIR)
+           ========================================================================= 
+        */
+        :root {
+            --bg-deep: #050505;
+            --glass: rgba(15, 15, 15, 0.85);
+            --border-glass: rgba(255, 255, 255, 0.05);
+            
+            /* Paleta de Neones y Marca */
+            --gold-neon: #dca834;
+            --gold-glow: rgba(220, 168, 52, 0.5);
+            --cyan-neon: #00f3ff;
+            --blue-neon: #1877f2;
+            --red-neon: #ea4335;
+            
+            --text-silver: #d1d1d1;
+            --text-gold: #f2d280;
+            
+            --f-serif: 'Playfair Display', serif;
+            --f-sans: 'Inter', sans-serif;
+            --f-mono: 'JetBrains Mono', monospace;
+            
+            --transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: default;
+        }
+
+        html, body {
+            background: var(--bg-deep);
+            color: white;
+            font-family: var(--f-sans);
+            overflow-x: hidden;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* =========================================================================
+           2. ANIMATED BACKGROUND (ESSENCE MATRIX)
+           ========================================================================= 
+        */
+        #canvas-essence {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            filter: blur(1px);
+        }
+
+        .noise {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+            opacity: 0.05;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* =========================================================================
+           3. PRESENTATION LAYOUT
+           ========================================================================= 
+        */
+        .presentation-frame {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .brand-reveal {
+            font-family: var(--f-serif);
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            line-height: 1.1;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: scale(0.95);
+            animation: revealScale 1.5s forwards 0.5s;
+        }
+
+        .brand-reveal span {
+            color: var(--gold-neon);
+            text-shadow: 0 0 20px var(--gold-glow);
+        }
+
+        .client-tag {
+            font-family: var(--f-mono);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: var(--text-gold);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* =========================================================================
+           4. SLIDES ESTRUCTURADAS (GLASS CARDS)
+           ========================================================================= 
+        */
+        .slide-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 100px 0;
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            width: 100%;
+        }
+
+        .glass-card {
+            background: var(--glass);
+            border: 1px solid var(--border-glass);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 4px;
+            position: relative;
+            transition: var(--transition);
+            overflow: hidden;
+        }
+
+        .glass-card:hover {
+            border-color: var(--gold-neon);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .card-icon {
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 4px;
+            background: rgba(0,0,0,0.5);
+        }
+
+        /* Neones de Iconos Potenciados */
+        .neon-web { color: var(--cyan-neon); filter: drop-shadow(0 0 12px var(--cyan-neon)); }
+        .neon-fb { color: var(--blue-neon); filter: drop-shadow(0 0 12px var(--blue-neon)); }
+        .neon-google { color: var(--red-neon); filter: drop-shadow(0 0 12px var(--red-neon)); }
+
+        .card-title {
+            font-family: var(--f-serif);
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--text-gold);
+        }
+
+        .card-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-silver);
+            font-weight: 300;
+        }
+
+        /* =========================================================================
+           5. INTERACTIVE SIMULATOR (CALCULADORA DE EXPANSIÓN CO)
+           ========================================================================= 
+        */
+        .investment-board {
+            background: rgba(10,10,10,0.9);
+            border: 1px solid var(--gold-neon);
+            padding: 50px;
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 850px) {
+            .investment-board { grid-template-columns: 1fr; padding: 25px; }
+        }
+
+        .simulator-controls {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            font-family: var(--f-mono);
+            font-size: 0.75rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .custom-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 2px;
+            background: #222;
+            outline: none;
+        }
+
+        .custom-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--gold-neon);
+            cursor: pointer;
+            box-shadow: 0 0 15px var(--gold-glow);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .metric-box {
+            background: rgba(255,255,255,0.02);
+            padding: 20px;
+            border-radius: 2px;
+            border: 1px solid rgba(255,255,255,0.02);
+        }
+
+        .m-label { font-size: 0.65rem; text-transform: uppercase; color: var(--text-silver); display: block; margin-bottom: 5px; letter-spacing: 1px; }
+        .m-value { font-family: var(--f-serif); font-size: 1.4rem; color: var(--gold-neon); }
+        .m-currency { font-family: var(--f-sans); font-size: 0.7rem; color: #666; display: block; margin-top: 2px; }
+
+        /* =========================================================================
+           6. FINAL CALL (HUMAN TEXT)
+           ========================================================================= 
+        */
+        .conclusion {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .conclusion p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--text-silver);
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 20px 40px;
+            border: 1px solid var(--gold-neon);
+            color: var(--gold-neon);
+            text-decoration: none;
+            font-family: var(--f-mono);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: var(--transition);
+        }
+
+        .cta-btn:hover {
+            background: var(--gold-neon);
+            color: black;
+            box-shadow: 0 0 30px var(--gold-glow);
+        }
+
+        /* =========================================================================
+           7. ANIMATIONS ENGINE
+           ========================================================================= 
+        */
+        @keyframes revealScale {
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: var(--transition);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .neon-line {
+            width: 60px;
+            height: 2px;
+            background: var(--gold-neon);
+            margin: 20px auto;
+            box-shadow: 0 0 10px var(--gold-glow);
+        }
+
+    </style>
+</head>
+<body>
+
+    <canvas id="canvas-essence"></canvas>
+    <div class="noise"></div>
+
+    <div class="presentation-frame">
+        
+        <header>
+            <span class="client-tag">Preparado para Santiago</span>
+            <h1 class="brand-reveal">Elixerium <span>Odor</span></h1>
+            <div class="neon-line"></div>
+            <p style="font-family: var(--f-mono); font-size: 0.7rem; color: #666; letter-spacing: 2px;">ESTRATEGIA GEOLOCALIZADA</p>
+        </header>
+
+        <section class="slide-section">
+            <span class="client-tag reveal">Sección 01</span>
+            <h2 class="brand-reveal reveal" style="font-size: 2.8rem; margin-bottom: 40px;">Usted pone el aroma.<br>Nosotros la <span>maquinaria.</span></h2>
+            
+            <div class="card-container">
+                <div class="glass-card reveal">
+                    <div class="card-icon neon-web">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="2" y1="12" x2="22" y2="12"></line><line x1="12" y1="17" x2="12" y2="21"></line><line x1="8" y1="21" x2="16" y2="21"></line></svg>
+                    </div>
+                    <h3 class="card-title">Vitrina Digital Pro</h3>
+                    <p class="card-text">Su propia web de alta gama. Un ecosistema limpio de 2 a 3 secciones enfocado 100% en celulares. Santiago, acá el cliente de Medellín o Bogotá no se pierde; entra, ve la exclusividad y compra.</p>
+                </div>
+
+                <div class="glass-card reveal">
+                    <div class="card-icon neon-fb">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                    </div>
+                    <h3 class="card-title">Pauta Meta Ads</h3>
+                    <p class="card-text">Dominamos la distribución. Configuramos los píxeles y públicos objetivos para que su fragancia aparezca de forma masiva ante los compradores con mayor poder adquisitivo del país.</p>
+                </div>
+
+                <div class="glass-card reveal">
+                    <div class="card-icon neon-google">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    </div>
+                    <h3 class="card-title">Google Positioning</h3>
+                    <p class="card-text">Validación técnica inmediata. Aseguramos que cuando busquen alternativas premium en los motores de búsqueda, la autoridad y seguridad de su marca sea impecable.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide-section">
+            <span class="client-tag reveal">Sección 02</span>
+            <h2 class="brand-reveal reveal" style="font-size: 2.8rem; margin-bottom: 40px;">El arte de <span>no ser saltado.</span></h2>
+            
+            <div class="glass-card reveal" style="background: rgba(220,168,52,0.03);">
+                <div class="architecture-layout" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+                    <div>
+                        <h3 class="card-title">Harley Production</h3>
+                        <p class="card-text" style="font-size: 1.1rem; margin-bottom: 20px;">
+                            Santiago, sabemos que le falta tiempo para la ejecución operativa. Por eso nos encargamos de estructurar videoclips nativos de impacto móvil con una duración exacta de <strong>16 a 29 segundos</strong>.
+                        </p>
+                        <p class="card-text">
+                            Piezas audiovisuales llave en mano orientadas a disparar el deseo de compra. Nos encargamos del guion estacional, la dirección de modelos y la edición con colorización cinematográfica.
+                        </p>
+                    </div>
+                    <div style="border-left: 1px solid var(--gold-neon); padding-left: 40px;">
+                        <ul style="list-style: none; font-family: var(--f-mono); font-size: 0.8rem; color: var(--text-gold);">
+                            <li style="margin-bottom: 15px;">→ Distribución en Medellín y Bogotá</li>
+                            <li style="margin-bottom: 15px;">→ Modelado Estacional Urbano</li>
+                            <li style="margin-bottom: 15px;">→ Enfoque en Retención Orgánica</li>
+                            <li style="margin-bottom: 15px;">→ Formato 9:16 nativo para Reels/TikTok</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide-section">
+            <span class="client-tag reveal">Sección 03</span>
+            <h2 class="brand-reveal reveal">Inversión <span>Transparente.</span></h2>
+            
+            <div class="investment-board reveal">
+                <div class="simulator-controls">
+                    <div class="slider-label">
+                        <span>Pauta Diaria Proyectada</span>
+                        <span id="v-budget" style="color: var(--gold-neon); font-weight: bold;">$30.000 PESOS</span>
+                    </div>
+                    <input type="range" min="15000" max="100000" step="5000" value="30000" class="custom-slider" id="budget-slider">
+                    <p style="font-size: 0.7rem; color: #666; margin-top: 20px; line-height: 1.4;">
+                        Santiago, este deslizador simula la aceleración de su embudo. Usted controla el presupuesto diario inyectado directamente a Meta.
+                    </p>
+                </div>
+                
+                <div class="metrics-grid">
+                    <div class="metric-box">
+                        <span class="m-label">Ventas Estimadas</span>
+                        <div class="m-value" id="v-orders">~10</div>
+                        <span class="m-currency">Órdenes / día promedio</span>
+                    </div>
+                    <div class="metric-box">
+                        <span class="m-label">Conversaciones Nuevas</span>
+                        <div class="m-value" id="v-chats">~24</div>
+                        <span class="m-currency">Clientes interesados</span>
+                    </div>
+                    <div class="metric-box">
+                        <span class="m-label">Ecosistema Mensual</span>
+                        <div class="m-value">$300.000</div>
+                        <span class="m-currency">PESOS COLOMBIANOS</span>
+                    </div>
+                    <div class="metric-box">
+                        <span class="m-label">Costo por Videoclip</span>
+                        <div class="m-value">$300.000</div>
+                        <span class="m-currency">PESOS COLOMBIANOS</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="conclusion reveal" style="margin-top: 80px;">
+                <p>Usted se encarga de que Elixerium Odor huela a éxito. <br> Nosotros nos encargamos de que el mercado nacional lo compre.</p>
+                <a href="https://wa.me/573218946959" class="cta-btn">Iniciar Ahora...</a>
+            </div>
+        </section>
+
+        <footer style="padding: 40px 0; text-align: center; font-family: var(--f-mono); font-size: 0.6rem; color: #444;">
+            RED SAPIEN x HARLEY PRODUCTION © 2026 | TECHNICAL INFRASTRUCTURE BY CRISTIAN LOPEZ
+        </footer>
+
+    </div>
+
+    <script>
+        /* =========================================================================
+           A. ENGINE DE ESENCIAS (CANVAS PARTICLES)
+           ========================================================================= 
+        */
+        const canvas = document.getElementById('canvas-essence');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function initCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particles = [];
+            for (let i = 0; i < 60; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    r: Math.random() * 2 + 1,
+                    vx: (Math.random() - 0.5) * 0.3,
+                    vy: (Math.random() - 0.5) * 0.3,
+                    opacity: Math.random() * 0.4
+                });
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(220, 168, 52, ${p.opacity})`;
+                ctx.fill();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', initCanvas);
+        initCanvas();
+        animate();
+
+        /* =========================================================================
+           B. SIMULADOR EN TIEMPO REAL (MÓVIL & PC OPTIMIZADO)
+           -------------------------------------------------------------------------
+        */
+        const slider = document.getElementById('budget-slider');
+        const lblBudget = document.getElementById('v-budget');
+        const lblOrders = document.getElementById('v-orders');
+        const lblChats = document.getElementById('v-chats');
+
+        slider.addEventListener('input', (e) => {
+            const val = e.target.value;
+            lblBudget.textContent = `$${parseInt(val).toLocaleString('es-CO')} PESOS`;
+            
+            // Proyección realista calibrada para perfumería en ciudades principales
+            const chats = Math.floor((val / 25000) * 20);
+            const orders = Math.floor(chats * 0.42); 
+
+            lblChats.textContent = `~${chats}`;
+            lblOrders.textContent = `~${orders}`;
+        });
+
+        /* =========================================================================
+           C. INTERSECTION OBSERVER INTERNO
+           -------------------------------------------------------------------------
+        */
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.12 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
